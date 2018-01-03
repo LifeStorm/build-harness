@@ -1,0 +1,12 @@
+## User ARGS to pass arguments
+DOCKER_REGISTRY_SERVER ?= docker.io
+
+.PHONY: docker\:login
+## Use DOCKER_HUB_USERNAME, DOCKER_HUB_PASSWORD and DOCKER_REGISTRY_SERVER env variables to pass credentials
+## Login into docker registry
+docker\:login: $(DOCKER)
+	$(call assert-set,DOCKER)
+	$(call assert-set,DOCKER_REGISTRY_USERNAME)
+	$(call assert-set,DOCKER_REGISTRY_PASSWORD)
+	$(call assert-set,DOCKER_REGISTRY_SERVER)
+	@$(DOCKER) login --username="$(DOCKER_REGISTRY_USERNAME)" --password="$(DOCKER_REGISTRY_PASSWORD)" $(DOCKER_REGISTRY_SERVER)
