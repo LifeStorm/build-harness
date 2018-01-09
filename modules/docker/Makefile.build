@@ -19,7 +19,7 @@ docker\:build: $(DOCKER)
 
 .PHONY: docker\:tag
 ## Tag docker image
-docker\:push: $(DOCKER)
+docker\:tag: $(DOCKER)
 	$(call assert-set,DOCKER_REGISTRY_SERVER)
 	$(call assert-set,DOCKER_IMAGE_NAME)
 	@$(DOCKER) tag $(DOCKER_IMAGE_TAG) $(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME)
