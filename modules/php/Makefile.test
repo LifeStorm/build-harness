@@ -1,0 +1,8 @@
+## User ARGS to pass arguments
+PHP_PHPUNIT_VERSION ?= latest
+
+.PHONY: php\:test
+## Run tests
+php\:test: $(DOCKER)
+	$(call assert-set,DOCKER)
+	@$(DOCKER) run -v $(shell pwd):/app --rm phpunit/phpunit:$(PHP_PHPUNIT_VERSION)
