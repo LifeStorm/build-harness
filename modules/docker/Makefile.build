@@ -3,7 +3,7 @@
 DOCKER_BUILD_PATH ?= .
 DOCKER_BUILD_FLAGS ?= --no-cache
 DOCKER_FILE ?= ./Dockerfile
-DOCKER_IMAGE_VERSION ?= develop
+DOCKER_IMAGE_TAG ?= latest
 
 .PHONY: docker\:build
 ## Build docker image
@@ -11,9 +11,15 @@ docker\:build: $(DOCKER)
 	$(call assert-set,DOCKER)
 	$(call assert-set,DOCKER_REGISTRY_SERVER)
 	$(call assert-set,DOCKER_IMAGE_NAME)
-	$(call assert-set,DOCKER_IMAGE_VERSION)
 	@BUILD_ARGS=`for arg in $$ARGS; do \
 		printf -- '--build-arg %s=%s ' "$$arg" "$${!arg}"; \
 	done`; \
-	echo "Building $(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VERSION) from $(DOCKER_FILE) with [$(DOCKER_BUILD_FLAGS)] build args..."; \
-	$(DOCKER) build $(DOCKER_BUILD_FLAGS) $$BUILD_ARGS -t $(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VERSION) -f $(DOCKER_FILE) $(DOCKER_BUILD_PATH)
+	echo "Building $(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) from $(DOCKER_FILE) with [$(DOCKER_BUILD_FLAGS)] build args..."; \
+	$(DOCKER) build $(DOCKER_BUILD_FLAGS) $$BUILD_ARGS -t $(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) -f $(DOCKER_FILE) $(DOCKER_BUILD_PATH)
+
+.PHONY: docker\:tag
+## Tag docker image
+docker\:push: $(DOCKER)
+	$(call assert-set,DOCKER_REGISTRY_SERVER)
+	$(call assert-set,DOCKER_IMAGE_NAME)
+	@$(DOCKER) tag $(DOCKER_IMAGE_TAG) $(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME)

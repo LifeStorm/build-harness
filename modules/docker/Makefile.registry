@@ -11,6 +11,13 @@ docker\:login: $(DOCKER)
 	$(call assert-set,DOCKER_REGISTRY_SERVER)
 	@echo "$(DOCKER_REGISTRY_PASSWORD)" | $(DOCKER) login --username="$(DOCKER_REGISTRY_USERNAME)" --password-stdin $(DOCKER_REGISTRY_SERVER)
 
+.PHONY: docker\:push
+## Push docker image to registry
+docker\:push: $(DOCKER)
+	$(call assert-set,DOCKER_REGISTRY_SERVER)
+	$(call assert-set,DOCKER_IMAGE_NAME)
+	@$(DOCKER) push $(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
+
 .PHONY: docker\:logout
 ## Login from docker registry
 docker\:logout: $(DOCKER)
