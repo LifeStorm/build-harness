@@ -12,7 +12,7 @@ docker\:build: $(DOCKER)
 	$(call assert-set,DOCKER_REGISTRY_SERVER)
 	$(call assert-set,DOCKER_IMAGE_NAME)
 	@BUILD_ARGS=`for arg in $$ARGS; do \
-		printf -- '--build-arg %s=%s ' "$$arg" "$${!arg}"; \
+		printf -- '--build-arg %s ' "$$arg"; \
 	done`; \
 	echo "Building $(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) from $(DOCKER_FILE) with [$(DOCKER_BUILD_FLAGS)] build args..."; \
 	$(DOCKER) build $(DOCKER_BUILD_FLAGS) $$BUILD_ARGS -t $(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) -f $(DOCKER_FILE) $(DOCKER_BUILD_PATH)
