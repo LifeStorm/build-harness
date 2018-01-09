@@ -10,3 +10,8 @@ docker\:login: $(DOCKER)
 	$(call assert-set,DOCKER_REGISTRY_PASSWORD)
 	$(call assert-set,DOCKER_REGISTRY_SERVER)
 	@$(DOCKER) login --username="$(DOCKER_REGISTRY_USERNAME)" --password="$(DOCKER_REGISTRY_PASSWORD)" $(DOCKER_REGISTRY_SERVER)
+
+.PHONY: docker\:logout
+## Login from docker registry
+docker\:logout: $(DOCKER)
+	@$(DOCKER) logout $(DOCKER_REGISTRY_SERVER)
