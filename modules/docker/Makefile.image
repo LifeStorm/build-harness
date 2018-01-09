@@ -1,13 +1,15 @@
 ## User ARGS to pass arguments
 DOCKER_CACHE ?= cache
 
+DOCKER_IMAGE_NAME_CLEANED=$(echo $DOCKER_IMAGE_NAME | sed -e 's/\//-/g')
+
 .PHONY: docker\:image\:save
 ## Save a docker image
 docker\:image\:save: $(DOCKER)
 	$(call assert-set,DOCKER_REGISTRY_SERVER)
 	$(call assert-set,DOCKER_IMAGE_NAME)
 	@mkdir $(DOCKER_CACHE)
-	@$(DOCKER) save $(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME) > $(DOCKER_CACHE)/$(DOCKER_IMAGE_NAME).tar
+	@$(DOCKER) save $(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME) > $(DOCKER_CACHE)/$(DOCKER_IMAGE_NAME_CLEANED).tar
 
 .PHONY: docker\:image\:restore
 ## Restore a docker image
@@ -15,4 +17,4 @@ docker\:image\:restore: $(DOCKER)
 	$(call assert-set,DOCKER_REGISTRY_SERVER)
 	$(call assert-set,DOCKER_IMAGE_NAME)
 	@mkdir $(DOCKER_CACHE)
-	@$(DOCKER) load -i $(DOCKER_CACHE)/$(DOCKER_IMAGE_NAME).tar
+	@$(DOCKER) load -i $(DOCKER_CACHE)/$(DOCKER_IMAGE_NAME_CLEANED).tar
