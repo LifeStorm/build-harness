@@ -8,5 +8,6 @@ php\:dep:
 # Install dependencies tool
 php\:dep\:setup: $(PHP)
 	@$(PHP) -r "readfile('https://getcomposer.org/installer');" | $(PHP)
-	@mv composer.phar /usr/bin/composer
-	@chmod +x /usr/bin/composer
+	@mv composer.phar composer
+	@chmod +x composer
+	composer --version
