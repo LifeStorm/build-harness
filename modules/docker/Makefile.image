@@ -7,7 +7,7 @@ docker\:image\:save: $(DOCKER)
 	$(call assert-set,DOCKER_REGISTRY_SERVER)
 	$(call assert-set,DOCKER_IMAGE_NAME)
 	@mkdir $(DOCKER_CACHE)
-	@$(DOCKER) save $(DOCKER_IMAGE_NAME) > $(DOCKER_CACHE)/$(DOCKER_IMAGE_NAME).tar
+	@$(DOCKER) save $(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME) > $(DOCKER_CACHE)/$(DOCKER_IMAGE_NAME).tar
 
 .PHONY: docker\:image\:restore
 ## Restore a docker image
