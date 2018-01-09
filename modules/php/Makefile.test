@@ -1,5 +1,5 @@
 .PHONY: php\:test
 ## Run tests
 # TODO: Add options
-php\:test: $(DOCKER)
+php\:test:
 	./vendor/bin/phpunit

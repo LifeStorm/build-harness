@@ -1,5 +1,12 @@
 .PHONY: php\:dep
 ## Install dependencies
 # TODO: Add options
-php\:dep: $(DOCKER)
+php\:dep:
 	composer install
+
+.PHONY: php\:dep\:setup
+# Install dependencies tool
+php\:dep\:setup: $(PHP)
+	@$(PHP) -r "readfile('https://getcomposer.org/installer');" | $(PHP)
+	@mv composer.phar /usr/bin/composer
+	@chmod +x /usr/bin/composer

@@ -1,4 +1,4 @@
-DOCKER:= $(shell which docker)
+PHP:= $(shell which php)
 
 default::
 	@exit 0
