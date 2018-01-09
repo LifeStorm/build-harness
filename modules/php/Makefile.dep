@@ -1,8 +1,5 @@
-## User ARGS to pass arguments
-PHP_COMPOSER_VERSION ?= 1.6
-
 .PHONY: php\:dep
 ## Install dependencies
+# TODO: Add options
 php\:dep: $(DOCKER)
-	$(call assert-set,DOCKER)
-	@$(DOCKER) run --rm -v $(shell pwd):/app composer:$(PHP_COMPOSER_VERSION) install
+	composer install
