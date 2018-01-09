@@ -1,5 +1,6 @@
+PHP_PHPUNIT_OPTIONS ?= "--coverage-text --colors=never"
+
 .PHONY: php\:test
 ## Run tests
-# TODO: Add options
 php\:test:
-	./vendor/bin/phpunit
+	./vendor/bin/phpunit $(PHP_PHPUNIT_OPTIONS)
