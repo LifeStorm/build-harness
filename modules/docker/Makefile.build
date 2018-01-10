@@ -1,5 +1,5 @@
 ## Use DOCKER_IMAGE_NAME envvar to specify docker image with tags
-## User ARGS to pass arguments
+## User DOCKER_BUILD_ARGS to pass arguments
 DOCKER_BUILD_PATH ?= .
 DOCKER_BUILD_FLAGS ?= --no-cache
 DOCKER_FILE ?= ./Dockerfile
@@ -11,7 +11,7 @@ docker\:build: $(DOCKER)
 	$(call assert-set,DOCKER)
 	$(call assert-set,DOCKER_REGISTRY_SERVER)
 	$(call assert-set,DOCKER_IMAGE_NAME)
-	@BUILD_ARGS=`for arg in $$ARGS; do \
+	@BUILD_ARGS=`for arg in $$DOCKER_BUILD_ARGS; do \
 		printf -- '--build-arg %s ' "$$arg"; \
 	done`; \
 	echo "Building $(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) from $(DOCKER_FILE) with [$(DOCKER_BUILD_FLAGS)] build args..."; \
@@ -22,4 +22,4 @@ docker\:build: $(DOCKER)
 docker\:tag: $(DOCKER)
 	$(call assert-set,DOCKER_REGISTRY_SERVER)
 	$(call assert-set,DOCKER_IMAGE_NAME)
-	@$(DOCKER) tag $(DOCKER_IMAGE_TAG) $(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME)
+	@$(DOCKER) tag $(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) $(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
