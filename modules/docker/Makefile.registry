@@ -1,4 +1,3 @@
-## User ARGS to pass arguments
 DOCKER_REGISTRY_SERVER ?= docker.io
 
 .PHONY: docker\:login
