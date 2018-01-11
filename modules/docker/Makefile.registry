@@ -1,6 +1,7 @@
 DOCKER_REGISTRY_SERVER ?= docker.io
+DOCKER_KEY_FILE ?= .key.json
 
-.PHONY: docker\:login
+.PHONY: docker\:lo§gin
 ## Use DOCKER_HUB_USERNAME, DOCKER_HUB_PASSWORD and DOCKER_REGISTRY_SERVER env variables to pass credentials
 ## Login into docker registry
 docker\:login: $(DOCKER)
@@ -9,6 +10,16 @@ docker\:login: $(DOCKER)
 	$(call assert-set,DOCKER_REGISTRY_PASSWORD)
 	$(call assert-set,DOCKER_REGISTRY_SERVER)
 	@echo "$(DOCKER_REGISTRY_PASSWORD)" | $(DOCKER) login --username="$(DOCKER_REGISTRY_USERNAME)" --password-stdin $(DOCKER_REGISTRY_SERVER)
+
+.PHONY: docker\:login\:key
+## Use DOCKER_KEY_FILE and DOCKER_REGISTRY_SERVER env variables to pass credentials
+## Login into docker registry with a key
+docker\:login\:key:
+ifneq ($(shell test -e $(DOCKER_KEY_FILE) && echo -n yes),yes)
+	@echo "Unable to find key"
+	@exit 1
+endif
+	@cat $(DOCKER_KEY_FILE) | $(DOCKER) login --username="_json_key" --password-stdin $(DOCKER_REGISTRY_SERVER)
 
 .PHONY: docker\:push
 ## Push docker image to registry
