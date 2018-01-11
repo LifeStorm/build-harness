@@ -1,7 +1,7 @@
 DOCKER_REGISTRY_SERVER ?= docker.io
 DOCKER_KEY_FILE ?= .key.json
 
-.PHONY: docker\:lo§gin
+.PHONY: docker\:login
 ## Use DOCKER_HUB_USERNAME, DOCKER_HUB_PASSWORD and DOCKER_REGISTRY_SERVER env variables to pass credentials
 ## Login into docker registry
 docker\:login: $(DOCKER)
